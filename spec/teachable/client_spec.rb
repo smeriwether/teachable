@@ -2,6 +2,7 @@ require "spec_helper"
 
 RSpec.describe Teachable::Client, :vcr do
   let(:fake_email) { "dev-8@example.com" }
+  let(:fake_password) { "password" }
   let(:fake_token) { "qC3v3HvBfKxCQuyqu49g" }
 
   it "can be created" do
@@ -31,6 +32,9 @@ RSpec.describe Teachable::Client, :vcr do
 
       expect(orders).to be_a(Array)
       expect(orders).to all(be_a(Teachable::Order))
+      orders.each do |order|
+        expect(order.id).not_to be_nil
+      end
     end
   end
 
@@ -68,8 +72,23 @@ RSpec.describe Teachable::Client, :vcr do
   it "can get the current user" do
     VCR.use_cassette("current_user") do
       client = Teachable::Client.new(email: fake_email, token: fake_token)
+
       user = client.users.current_user
+
       expect(user).to be_a(Teachable::User)
+      expect(user.id).not_to be_nil
+    end
+  end
+
+  it "can register a user" do
+    random_email = "dev+#{SecureRandom.hex}@example.com"
+    VCR.use_cassette("register_user") do
+      client = Teachable::Client.new(email: fake_email, token: fake_token)
+      user = client.users.register(
+        email: random_email, password: fake_password, password_confirmation: fake_password
+      )
+      expect(user).to be_a(Teachable::User)
+      expect(user.id).not_to be_nil
     end
   end
 end

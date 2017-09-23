@@ -3,6 +3,7 @@ require "spec_helper"
 RSpec.describe Teachable::UsersResource do
   let(:current_user_id) { 502 }
   let(:fake_email) { "example@example.com" }
+  let(:fake_password) { "password" }
   let(:fake_token) { "foobarbaz1234567890" }
   let(:fake_client) { Teachable::Client.new(email: fake_email, token: fake_token) }
 
@@ -24,6 +25,24 @@ RSpec.describe Teachable::UsersResource do
     expect(user.id).to eq(current_user_id)
     expect(user.email).to eq(fake_email)
     expect(user.tokens).to eq(fake_token)
+  end
+
+  it "can register a user" do
+    params = { email: fake_email, password: fake_password, password_confirmation: fake_password }
+    stub = stub_request(
+      :post, "http://localhost:3000/users.json"
+    ).with(
+      body: hash_including("user" => params),
+      query: hash_including("user_email" => fake_email, "user_token" => fake_token),
+    ).to_return(body: current_user_json)
+
+    user = Teachable::UsersResource.new(fake_client).register(params)
+
+    expect(stub).to have_been_requested
+    expect(user).to be_a(Teachable::User)
+    expect(user.id).not_to be_nil
+    expect(user.tokens).not_to be_nil
+    expect(user.email).to eq(fake_email)
   end
 
   def current_user_json

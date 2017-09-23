@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://fast-bayou-75985.herokuapp.com/users.json?user_email=dev-8@example.com&user_token=qC3v3HvBfKxCQuyqu49g
+    body:
+      encoding: UTF-8
+      string: '{"user":{"email":"dev+9d08a628ae365b7109944d475376038a@example.com","password":"password","password_confirmation":"password"}}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 'Created '
+    headers:
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Location:
+      - https://fast-bayou-75985.herokuapp.com/
+      Content-Type:
+      - application/json; charset=utf-8
+      Etag:
+      - W/"d4a13362079de27bc81eff301809580b"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 63047f15-88c8-4c1f-b7c4-113bfc912f43
+      X-Runtime:
+      - '0.107785'
+      Server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-12-16)
+      Date:
+      - Sat, 23 Sep 2017 19:13:35 GMT
+      Content-Length:
+      - '222'
+      Via:
+      - 1.1 vegur
+    body:
+      encoding: UTF-8
+      string: '{"id":516,"name":null,"nickname":null,"image":null,"email":"dev+9d08a628ae365b7109944d475376038a@example.com","tokens":"6vAgQJBnrUiH-QKy-1Gi","created_at":"2017-09-23T19:13:35.231Z","updated_at":"2017-09-23T19:13:35.249Z"}'
+    http_version: 
+  recorded_at: Sat, 23 Sep 2017 19:13:35 GMT
+recorded_with: VCR 3.0.3
