@@ -14,7 +14,7 @@ RSpec.describe Teachable::Resource do
     expect(orders).to all(be_a(Teachable::Order))
   end
 
-  it "can trasnform a HTTParty single instance response to a Teachable::Model instance" do
+  it "can trasnform a HTTParty single instance response to a Teachable::Model" do
     resource = Teachable::OrdersResource.new(nil)
     order = resource.transform(single_response)
     expect(order).to be_a(Teachable::Order)

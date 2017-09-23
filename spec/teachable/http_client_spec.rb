@@ -43,42 +43,44 @@ RSpec.describe Teachable::HttpClient do
     expect(stub).to have_been_requested
   end
 
-  it "can be created with an email or token" do
-    expect(Teachable::HttpClient.new).to be_a(Teachable::HttpClient)
-  end
+  describe "without an email or token" do
+    it "can be created" do
+      expect(Teachable::HttpClient.new).to be_a(Teachable::HttpClient)
+    end
 
-  it "can GET data without an email or token" do
-    stub = stub_request(
-      :get, "http://localhost:3000/foo.json"
-    ).with(
-      query: {},
-      headers: { "Accept" => "application/json", "Content-Type" => "application/json" }
-    )
-    Teachable::HttpClient.new.get("/foo.json")
-    expect(stub).to have_been_requested
-  end
+    it "can GET data" do
+      stub = stub_request(
+        :get, "http://localhost:3000/foo.json"
+      ).with(
+        query: {},
+        headers: { "Accept" => "application/json", "Content-Type" => "application/json" }
+      )
+      Teachable::HttpClient.new.get("/foo.json")
+      expect(stub).to have_been_requested
+    end
 
-  it "can POST data without an email or token" do
-    body = { "foo" => "baz", "bar" => "baz" }
-    stub = stub_request(
-      :post, "http://localhost:3000/foo.json"
-    ).with(
-      query: {},
-      body: hash_including(body),
-      headers: { "Accept" => "application/json", "Content-Type" => "application/json" }
-    )
-    Teachable::HttpClient.new.post("/foo.json", body)
-    expect(stub).to have_been_requested
-  end
+    it "can POST data" do
+      body = { "foo" => "baz", "bar" => "baz" }
+      stub = stub_request(
+        :post, "http://localhost:3000/foo.json"
+      ).with(
+        query: {},
+        body: hash_including(body),
+        headers: { "Accept" => "application/json", "Content-Type" => "application/json" }
+      )
+      Teachable::HttpClient.new.post("/foo.json", body)
+      expect(stub).to have_been_requested
+    end
 
-  it "can DESTROY data without an email or token" do
-    stub = stub_request(
-      :delete, "http://localhost:3000/foo/1.json"
-    ).with(
-      query: {},
-      headers: { "Accept" => "application/json", "Content-Type" => "application/json" }
-    )
-    Teachable::HttpClient.new.destroy("/foo/1.json")
-    expect(stub).to have_been_requested
+    it "can DESTROY data" do
+      stub = stub_request(
+        :delete, "http://localhost:3000/foo/1.json"
+      ).with(
+        query: {},
+        headers: { "Accept" => "application/json", "Content-Type" => "application/json" }
+      )
+      Teachable::HttpClient.new.destroy("/foo/1.json")
+      expect(stub).to have_been_requested
+    end
   end
 end
