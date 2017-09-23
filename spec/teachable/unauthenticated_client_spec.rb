@@ -1,8 +1,8 @@
 require "spec_helper"
 
 RSpec.describe Teachable::UnauthenticatedClient, :vcr do
-  let(:fake_email) { "dev-8@example.com" }
-  let(:fake_password) { "password" }
+  let(:real_email) { "dev-8@example.com" }
+  let(:real_password) { "password" }
 
   it "can be created" do
     expect(Teachable::UnauthenticatedClient.new).to be_a(Teachable::UnauthenticatedClient)
@@ -10,8 +10,8 @@ RSpec.describe Teachable::UnauthenticatedClient, :vcr do
 
   it "http_client can be changed after new" do
     client = Teachable::UnauthenticatedClient.new
-    client.http_client = "fake client"
-    expect(client.http_client).to eq("fake client")
+    client.http_client = "real client"
+    expect(client.http_client).to eq("real client")
   end
 
   it "can register a user" do
@@ -19,7 +19,7 @@ RSpec.describe Teachable::UnauthenticatedClient, :vcr do
     VCR.use_cassette("unauthenticated_register_user") do
       client = Teachable::UnauthenticatedClient.new
       user = client.users.register(
-        email: random_email, password: fake_password, password_confirmation: fake_password
+        email: random_email, password: real_password, password_confirmation: real_password
       )
       expect(user).to be_a(Teachable::User)
       expect(user.id).not_to be_nil
@@ -29,7 +29,7 @@ RSpec.describe Teachable::UnauthenticatedClient, :vcr do
   it "can authenticate a user" do
     VCR.use_cassette("unauthenticated_authenticate_user") do
       client = Teachable::UnauthenticatedClient.new
-      user = client.users.authenticate(email: fake_email, password: fake_password)
+      user = client.users.authenticate(email: real_email, password: real_password)
       expect(user).to be_a(Teachable::User)
       expect(user.id).not_to be_nil
     end
