@@ -1,3 +1,7 @@
+require "simplecov"
+
+SimpleCov.start
+
 require "bundler/setup"
 require "teachable"
 require "webmock/rspec"
@@ -5,6 +9,8 @@ require "pry"
 require "vcr"
 
 require_all "spec/support"
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(SimpleCov::Formatter::HTMLFormatter)
 
 RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"
