@@ -2,24 +2,20 @@ module Teachable
   class Order
     attr_accessor :id, :number, :total, :total_quantity, :email, :special_instructions
 
-    def initialize(id:, number:, total:, total_quantity:, email:, special_instructions: nil, **)
-      self.id = id
-      self.number = number
-      self.total = total
-      self.total_quantity = total_quantity
-      self.email = email
-      self.special_instructions = special_instructions
+    def initialize(params = {})
+      self.id = params[:id]
+      self.number = params[:number]
+      self.total = params[:total]
+      self.total_quantity = params[:total_quantity]
+      self.email = params[:email]
+      self.special_instructions = params[:special_instructions]
     end
 
     def to_hash
-      {
-        id: id,
-        number: number,
-        total: total,
-        total_quantity: total_quantity,
-        email: email,
-        special_instructions: special_instructions
-      }
+      instance_variables.inject({}) do |accum, iv|
+        accum[iv.to_s.delete("@")] = instance_variable_get(iv)
+        accum
+      end.with_indifferent_access
     end
   end
 end

@@ -13,8 +13,8 @@ RSpec.describe Teachable::Client, :vcr do
     client.email = fake_email
     client.token = fake_token
 
-    expect(client.email).to eq fake_email
-    expect(client.token).to eq fake_token
+    expect(client.email).to eq(fake_email)
+    expect(client.token).to eq(fake_token)
   end
 
   it "http_client can be changed after new" do
