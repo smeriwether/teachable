@@ -83,4 +83,22 @@ RSpec.describe Teachable::HttpClient do
       expect(stub).to have_been_requested
     end
   end
+
+  it "raises an error when a GET request is unsuccessful" do
+    stub_request(:get, "http://localhost:3000/foo/1.json").to_return(body: "foo", status: 422)
+    expect { Teachable::HttpClient.new.get("/foo/1.json") }.
+      to raise_error(Teachable::UnsucessfulRequestError)
+  end
+
+  it "raises an error when a POST request is unsuccessful" do
+    stub_request(:post, "http://localhost:3000/foo/1.json").to_return(body: "foo", status: 422)
+    expect { Teachable::HttpClient.new.post("/foo/1.json", {}) }.
+      to raise_error(Teachable::UnsucessfulRequestError)
+  end
+
+  it "raises an error when a DESTROY request is unsuccessful" do
+    stub_request(:delete, "http://localhost:3000/foo/1.json").to_return(body: "foo", status: 422)
+    expect { Teachable::HttpClient.new.destroy("/foo/1.json") }.
+      to raise_error(Teachable::UnsucessfulRequestError)
+  end
 end

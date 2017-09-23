@@ -1,6 +1,9 @@
 module Teachable
+  UnsucessfulRequestError = Class.new(::StandardError)
+
   class HttpClient
     include HTTParty
+
     headers "Accept" => "application/json", "Content-Type" => "application/json"
 
     attr_reader :email, :token
@@ -12,18 +15,27 @@ module Teachable
     end
 
     def get(url)
-      self.class.get(authenticated_url(url))&.body
+      check_error { self.class.get(authenticated_url(url)) }
     end
 
     def post(url, body)
-      self.class.post(authenticated_url(url), body: body.to_json)&.body
+      check_error { self.class.post(authenticated_url(url), body: body.to_json) }
     end
 
     def destroy(url)
-      self.class.delete(authenticated_url(url))
+      check_error { self.class.delete(authenticated_url(url)) }
     end
 
     private
+
+    def check_error
+      resp = yield
+      if resp && resp.success?
+        resp.body
+      else
+        raise UnsucessfulRequestError.new(resp.body)
+      end
+    end
 
     def authenticated_url(url)
       return url unless email && token

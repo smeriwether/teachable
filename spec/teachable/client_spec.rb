@@ -100,4 +100,25 @@ RSpec.describe Teachable::Client, :vcr do
       expect(user.id).not_to be_nil
     end
   end
+
+  it "will raise an error when trying to register an existing user" do
+    VCR.use_cassette("register_user_error") do
+      client = Teachable::Client.new(email: fake_email, token: fake_token)
+      expect do
+        client.users.register(
+          email: fake_email, password: fake_password, password_confirmation: fake_password
+        )
+      end.to raise_error(Teachable::UnsucessfulRequestError)
+    end
+  end
+
+  it "will raise en error when trying to create an order with missing data" do
+    VCR.use_cassette("create_order_error") do
+      client = Teachable::Client.new(email: fake_email, token: fake_token)
+      expect do
+        order = Teachable::Order.new(total: 10)
+        client.orders.create(order: order)
+      end.to raise_error(Teachable::UnsucessfulRequestError)
+    end
+  end
 end
