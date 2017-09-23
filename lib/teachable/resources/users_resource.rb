@@ -13,6 +13,10 @@ module Teachable
       )
     end
 
+    def authenticate(email:, password:)
+      transform(client.http_client.post("/users/sign_in.json", user: { email: email, password: password }))
+    end
+
     private
 
     def model_klass

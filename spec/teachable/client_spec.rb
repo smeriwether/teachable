@@ -91,4 +91,13 @@ RSpec.describe Teachable::Client, :vcr do
       expect(user.id).not_to be_nil
     end
   end
+
+  it "can authenticate a user" do
+    VCR.use_cassette("authenticate_user") do
+      client = Teachable::Client.new(email: fake_email, token: fake_token)
+      user = client.users.authenticate(email: fake_email, password: fake_password)
+      expect(user).to be_a(Teachable::User)
+      expect(user.id).not_to be_nil
+    end
+  end
 end

@@ -45,6 +45,24 @@ RSpec.describe Teachable::UsersResource do
     expect(user.email).to eq(fake_email)
   end
 
+  it "can authenticate a user" do
+    params = { email: fake_email, password: fake_password }
+    stub = stub_request(
+      :post, "http://localhost:3000/users/sign_in.json"
+    ).with(
+      body: hash_including("user" => params),
+      query: hash_including("user_email" => fake_email, "user_token" => fake_token),
+    ).to_return(body: current_user_json)
+
+    user = Teachable::UsersResource.new(fake_client).authenticate(params)
+
+    expect(stub).to have_been_requested
+    expect(user).to be_a(Teachable::User)
+    expect(user.id).not_to be_nil
+    expect(user.tokens).not_to be_nil
+    expect(user.email).to eq(fake_email)
+  end
+
   def current_user_json
     {
       "id" => current_user_id,
