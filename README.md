@@ -39,26 +39,39 @@ client = Teachable::Client.new(email: {email}, token: {token})
 
 Actions:
 ```ruby
+# List all Orders:
 orders = client.orders.all
+
+# Create a new Order:
 new_order = Teachable::Order.new(total: 1, total_quantity: 1, email: {email})
 new_order = client.orders.create(order: new_order)
+
+# Delete an Order:
 client.orders.destory(order_id: new_order.id)
 
+# Get Current User:
 current_user = client.users.current_user
+
+# Register a new User:
 new_user = client.users.register(email: {email}, password: {password}, password_confirmation: {password})
+
+# Authenticate an existing User:
 user = client.users.authenticate(email: {email}, password: {password})
 ```
 
 
-If you don't have a token you can register using the authenticated client.
+If you don't have a token you can register using the unauthenticated client.
 ```ruby
-client = Teachable::UnauthentiatedClient.new
+unauthenticated_client = Teachable::UnauthentiatedClient.new
 ```
 
 Which can before these actions:
 ```ruby
-new_user = client.users.register(email: {email}, password: {password}, password_confirmation: {password})
-user = client.users.authenticate(email: {email}, password: {password})
+# Register a new User:
+new_user = unauthenticated_client.users.register(email: {email}, password: {password}, password_confirmation: {password})
+
+# Authenticate an existing User:
+user = unauthenticated_client.users.authenticate(email: {email}, password: {password})
 ```
 
 
