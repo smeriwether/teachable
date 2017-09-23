@@ -1,4 +1,6 @@
 module Teachable
+  NullResponseBodyError = Class.new(::StandardError)
+
   class Resource
     attr_reader :client
 
@@ -18,7 +20,9 @@ module Teachable
     private
 
     def parse_json(body)
-      JSON.parse(body)
+      resp = JSON.parse(body)
+      raise NullResponseBodyError.new(body) unless resp
+      resp
     end
 
     def to_model(object)

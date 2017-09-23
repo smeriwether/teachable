@@ -20,6 +20,11 @@ RSpec.describe Teachable::Resource do
     expect(order).to be_a(Teachable::Order)
   end
 
+  it "can handle a nil response from JSON.parse" do
+    resource = Teachable::OrdersResource.new(nil)
+    expect { resource.transform("null") }.to raise_error(Teachable::NullResponseBodyError)
+  end
+
   def array_response
     [
       {

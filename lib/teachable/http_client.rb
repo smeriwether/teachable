@@ -5,6 +5,7 @@ module Teachable
     include HTTParty
 
     headers "Accept" => "application/json", "Content-Type" => "application/json"
+    default_timeout 10
 
     attr_reader :email, :token
 
