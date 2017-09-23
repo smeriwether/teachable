@@ -5,7 +5,7 @@ module Teachable
 
     attr_reader :email, :token
 
-    def initialize(email, token)
+    def initialize(email = nil, token = nil)
       self.class.default_options[:base_uri] = ENV["URI"] || "localhost:3000"
       @email = email
       @token = token
@@ -26,6 +26,7 @@ module Teachable
     private
 
     def authenticated_url(url)
+      return url unless email && token
       "#{url}?user_email=#{email}&user_token=#{token}"
     end
   end
