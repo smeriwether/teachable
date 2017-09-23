@@ -31,4 +31,15 @@ RSpec.describe Teachable::HttpClient do
     Teachable::HttpClient.new(fake_email, fake_token).post("/foo.json", body)
     expect(stub).to have_been_requested
   end
+
+  it "can DESTROY data" do
+    stub = stub_request(
+      :delete, "http://localhost:3000/foo/1.json"
+    ).with(
+      query: hash_including("user_email" => fake_email, "user_token" => fake_token),
+      headers: { "Accept" => "application/json", "Content-Type" => "application/json" }
+    )
+    Teachable::HttpClient.new(fake_email, fake_token).destroy("/foo/1.json")
+    expect(stub).to have_been_requested
+  end
 end

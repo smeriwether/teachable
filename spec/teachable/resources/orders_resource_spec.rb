@@ -78,6 +78,16 @@ RSpec.describe Teachable::OrdersResource do
     expect(order.email).to eq(params[:email])
   end
 
+  it "can destroy an order" do
+    stub = stub_request(
+      :delete, "http://localhost:3000/api/orders/1.json"
+    ).with(query: hash_including("user_email" => fake_email, "user_token" => fake_token))
+
+    Teachable::OrdersResource.new(fake_client).destroy(order_id: 1)
+
+    expect(stub).to have_been_requested
+  end
+
   def no_orders_json
     [].to_json
   end

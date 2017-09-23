@@ -19,6 +19,10 @@ module Teachable
       self.class.post(authenticated_url(url), body: body.to_json)&.body
     end
 
+    def destroy(url)
+      self.class.delete(authenticated_url(url))
+    end
+
     private
 
     def authenticated_url(url)

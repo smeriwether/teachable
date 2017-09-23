@@ -49,4 +49,19 @@ RSpec.describe Teachable::Client, :vcr do
       expect(order.email).to eq(fake_email)
     end
   end
+
+  it "can delete an order" do
+    client = Teachable::Client.new(email: fake_email, token: fake_token)
+    order_id = nil
+
+    VCR.use_cassette("all_orders") do
+      orders = client.orders.all
+      order_id = orders.last.id
+    end
+
+    VCR.use_cassette("delete_order") do
+      client = Teachable::Client.new(email: fake_email, token: fake_token)
+      client.orders.destroy(order_id: order_id)
+    end
+  end
 end
