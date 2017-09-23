@@ -22,8 +22,26 @@ RSpec.describe Teachable::Resource do
 
   def array_response
     [
-      Teachable::Order.new(id: 1, number: 1, total: nil, total_quantity: nil, email: nil).to_hash,
-      Teachable::Order.new(id: 1, number: 2, total: nil, total_quantity: nil, email: nil).to_hash
+      {
+        "id" => 838,
+        "number" => "5b763124393ab6a6",
+        "total" => "10.0",
+        "total_quantity" => 100,
+        "email" => "stephen@example.com",
+        "special_instructions" => nil,
+        "created_at" => "2017-09-23T17:57:01.644Z",
+        "updated_at" => "2017-09-23T17:57:01.644Z"
+      },
+      {
+        "id" => 839,
+        "number" => "9eac226887dbc95c",
+        "total" => "10.0",
+        "total_quantity" => 100,
+        "email" => "stephen@example.com",
+        "special_instructions" => nil,
+        "created_at" => "2017-09-23T17:57:07.510Z",
+        "updated_at" => "2017-09-23T17:57:07.510Z"
+      }
     ].to_json
   end
 

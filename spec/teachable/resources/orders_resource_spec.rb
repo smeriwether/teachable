@@ -35,11 +35,11 @@ RSpec.describe Teachable::OrdersResource do
     expect(stub).to have_been_requested
     expect(orders.length).to eq(1)
     order = orders.first
-    expect(order.number).to eq(1)
-    expect(order.total).to eq(10)
+    expect(order.id).to eq(838)
+    expect(order.number).to eq("5b763124393ab6a6")
+    expect(order.total).to eq("10.0")
     expect(order.total_quantity).to eq(100)
-    expect(order.email).to eq(fake_email)
-    expect(order.special_instructions).to eq("special_instructions")
+    expect(order.email).to eq("stephen@example.com")
   end
 
   it "can return all orders if there are multiple orders" do
@@ -53,10 +53,8 @@ RSpec.describe Teachable::OrdersResource do
 
     expect(stub).to have_been_requested
     expect(orders.length).to eq(2)
-    order = orders.first
-    expect(order.number).to eq(1)
-    order = orders.second
-    expect(order.number).to eq(2)
+    expect(orders.first.id).not_to be_nil
+    expect(orders.second.id).not_to be_nil
   end
 
   it "can create an order" do
@@ -86,35 +84,41 @@ RSpec.describe Teachable::OrdersResource do
 
   def one_order_json
     [
-      Teachable::Order.new(
-        id: 1,
-        number: 1,
-        total: 10,
-        total_quantity: 100,
-        email: fake_email,
-        special_instructions: "special_instructions"
-      ).to_hash,
+      {
+        "id" => 838,
+        "number" => "5b763124393ab6a6",
+        "total" => "10.0",
+        "total_quantity" => 100,
+        "email" => "stephen@example.com",
+        "special_instructions" => nil,
+        "created_at" => "2017-09-23T17:57:01.644Z",
+        "updated_at" => "2017-09-23T17:57:01.644Z"
+      }
     ].to_json
   end
 
   def two_orders_json
     [
-      Teachable::Order.new(
-        id: 1,
-        number: 1,
-        total: 10,
-        total_quantity: 100,
-        email: fake_email,
-        special_instructions: "special_instructions"
-      ).to_hash,
-      Teachable::Order.new(
-        id: 2,
-        number: 2,
-        total: 10,
-        total_quantity: 100,
-        email: fake_email,
-        special_instructions: "special_instructions"
-      ).to_hash,
+      {
+        "id" => 838,
+        "number" => "5b763124393ab6a6",
+        "total" => "10.0",
+        "total_quantity" => 100,
+        "email" => "stephen@example.com",
+        "special_instructions" => nil,
+        "created_at" => "2017-09-23T17:57:01.644Z",
+        "updated_at" => "2017-09-23T17:57:01.644Z"
+      },
+      {
+        "id" => 839,
+        "number" => "9eac226887dbc95c",
+        "total": "10.0",
+        "total_quantity" => 100,
+        "email" => "stephen@example.com",
+        "special_instructions" => nil,
+        "created_at" => "2017-09-23T17:57:07.510Z",
+        "updated_at" => "2017-09-23T17:57:07.510Z"
+      }
     ].to_json
   end
 
