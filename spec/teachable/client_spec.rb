@@ -64,4 +64,12 @@ RSpec.describe Teachable::Client, :vcr do
       client.orders.destroy(order_id: order_id)
     end
   end
+
+  it "can get the current user" do
+    VCR.use_cassette("current_user") do
+      client = Teachable::Client.new(email: fake_email, token: fake_token)
+      user = client.users.current_user
+      expect(user).to be_a(Teachable::User)
+    end
+  end
 end

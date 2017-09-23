@@ -11,5 +11,9 @@ module Teachable
     def orders
       OrdersResource.new(self)
     end
+
+    def users
+      UsersResource.new(self)
+    end
   end
 end
