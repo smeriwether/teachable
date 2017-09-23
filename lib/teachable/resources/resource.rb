@@ -6,15 +6,15 @@ module Teachable
       @client = client
     end
 
-    def transform_all(resp)
-      parsed = parse_json(resp)
-      parsed.dig("orders")&.map { |p| to_model(p) }
+    def transform_all(body)
+      parsed = parse_json(body)
+      parsed&.map { |p| to_model(p) }
     end
 
     private
 
-    def parse_json(resp)
-      JSON.parse(resp)
+    def parse_json(body)
+      JSON.parse(body)
     end
 
     def to_model(object)

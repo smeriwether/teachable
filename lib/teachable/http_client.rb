@@ -1,18 +1,18 @@
 module Teachable
   class HttpClient
     include HTTParty
-    base_uri "localhost:3000"
     headers "Accept" => "application/json", "Content-Type" => "application/json"
 
     attr_reader :email, :token
 
     def initialize(email, token)
+      self.class.default_options[:base_uri] = ENV["URI"] || "localhost:3000"
       @email = email
       @token = token
     end
 
     def get(url)
-      self.class.get(authenticated_url(url))
+      self.class.get(authenticated_url(url))&.body
     end
 
     private

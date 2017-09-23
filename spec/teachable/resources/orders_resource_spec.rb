@@ -38,7 +38,7 @@ RSpec.describe Teachable::OrdersResource do
     expect(order.number).to eq(1)
     expect(order.total).to eq(10)
     expect(order.total_quantity).to eq(100)
-    expect(order.user_email).to eq(fake_email)
+    expect(order.email).to eq(fake_email)
     expect(order.special_instructions).to eq("special_instructions")
   end
 
@@ -60,41 +60,40 @@ RSpec.describe Teachable::OrdersResource do
   end
 
   def no_orders_json
-    { orders: [] }.to_json
+    [].to_json
   end
 
   def one_order_json
-    {
-      orders: [
-        Teachable::Order.new(
-          number: 1,
-          total: 10,
-          total_quantity: 100,
-          user_email: fake_email,
-          special_instructions: "special_instructions"
-        ).to_hash,
-      ]
-    }.to_json
+    [
+      Teachable::Order.new(
+        id: 1,
+        number: 1,
+        total: 10,
+        total_quantity: 100,
+        email: fake_email,
+        special_instructions: "special_instructions"
+      ).to_hash,
+    ].to_json
   end
 
   def two_orders_json
-    {
-      orders: [
-        Teachable::Order.new(
-          number: 1,
-          total: 10,
-          total_quantity: 100,
-          user_email: fake_email,
-          special_instructions: "special_instructions"
-        ).to_hash,
-        Teachable::Order.new(
-          number: 2,
-          total: 10,
-          total_quantity: 100,
-          user_email: fake_email,
-          special_instructions: "special_instructions"
-        ).to_hash,
-      ]
-    }.to_json
+    [
+      Teachable::Order.new(
+        id: 1,
+        number: 1,
+        total: 10,
+        total_quantity: 100,
+        email: fake_email,
+        special_instructions: "special_instructions"
+      ).to_hash,
+      Teachable::Order.new(
+        id: 2,
+        number: 2,
+        total: 10,
+        total_quantity: 100,
+        email: fake_email,
+        special_instructions: "special_instructions"
+      ).to_hash,
+    ].to_json
   end
 end

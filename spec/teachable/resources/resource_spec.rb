@@ -15,11 +15,9 @@ RSpec.describe Teachable::Resource do
   end
 
   def array_response
-    {
-      orders: [
-        Teachable::Order.new(number: 1, total: nil, total_quantity: nil, user_email: nil).to_hash,
-        Teachable::Order.new(number: 2, total: nil, total_quantity: nil, user_email: nil).to_hash
-      ]
-    }.to_json
+    [
+      Teachable::Order.new(id: 1, number: 1, total: nil, total_quantity: nil, email: nil).to_hash,
+      Teachable::Order.new(id: 1, number: 2, total: nil, total_quantity: nil, email: nil).to_hash
+    ].to_json
   end
 end
