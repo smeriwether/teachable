@@ -15,6 +15,10 @@ module Teachable
       self.class.get(authenticated_url(url))&.body
     end
 
+    def post(url, body)
+      self.class.post(authenticated_url(url), body: body.to_json)&.body
+    end
+
     private
 
     def authenticated_url(url)

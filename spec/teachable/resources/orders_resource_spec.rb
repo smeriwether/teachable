@@ -59,6 +59,27 @@ RSpec.describe Teachable::OrdersResource do
     expect(order.number).to eq(2)
   end
 
+  it "can create an order" do
+    params = { number: 1, total: 10, total_quantity: 100, email: fake_email, special_instructions: nil }
+    stub = stub_request(
+      :post, "http://localhost:3000/api/orders.json"
+    ).with(
+      query: hash_including("user_email" => fake_email, "user_token" => fake_token),
+      body: hash_including("order" => params),
+    ).to_return(body: new_order_json(params))
+
+    order = Teachable::Order.new(params)
+    order = Teachable::OrdersResource.new(fake_client).create(order: order)
+
+    expect(stub).to have_been_requested
+    expect(order).to be_a(Teachable::Order)
+    expect(order.id).not_to be(nil)
+    expect(order.number).to eq(params[:number])
+    expect(order.total).to eq(params[:total])
+    expect(order.total_quantity).to eq(params[:total_quantity])
+    expect(order.email).to eq(params[:email])
+  end
+
   def no_orders_json
     [].to_json
   end
@@ -95,5 +116,9 @@ RSpec.describe Teachable::OrdersResource do
         special_instructions: "special_instructions"
       ).to_hash,
     ].to_json
+  end
+
+  def new_order_json(params)
+    params.merge(id: 1, special_instructions: nil, created_at: Time.now, updated_at: Time.now).to_json
   end
 end

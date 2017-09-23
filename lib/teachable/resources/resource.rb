@@ -11,6 +11,10 @@ module Teachable
       parsed&.map { |p| to_model(p) }
     end
 
+    def transform(body)
+      to_model(parse_json(body))
+    end
+
     private
 
     def parse_json(body)

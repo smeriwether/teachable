@@ -33,4 +33,20 @@ RSpec.describe Teachable::Client, :vcr do
       expect(orders).to all(be_a(Teachable::Order))
     end
   end
+
+  it "can create an order" do
+    VCR.use_cassette("create_order") do
+      client = Teachable::Client.new(email: fake_email, token: fake_token)
+
+      order = Teachable::Order.new(total: 10, total_quantity: 100, email: fake_email)
+      order = client.orders.create(order: order)
+
+      expect(order).to be_a(Teachable::Order)
+      expect(order.id).not_to be_nil
+      expect(order.number).not_to be_nil
+      expect(order.total).to eq("10.0")
+      expect(order.total_quantity).to eq(100)
+      expect(order.email).to eq(fake_email)
+    end
+  end
 end

@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://fast-bayou-75985.herokuapp.com/api/orders.json?user_email=dev-8@example.com&user_token=qC3v3HvBfKxCQuyqu49g
+    body:
+      encoding: UTF-8
+      string: '{"order":{"number":1,"total":10,"total_quantity":100,"email":"dev-8@example.com","special_instructions":null}}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: 'OK '
+    headers:
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/json; charset=utf-8
+      Etag:
+      - W/"a32fcce5e34c115b8c9a681112bd255b"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e9ea6817-ff9e-4800-8f7e-de1a90b028b4
+      X-Runtime:
+      - '0.041875'
+      Server:
+      - WEBrick/1.3.1 (Ruby/2.2.4/2015-12-16)
+      Date:
+      - Sat, 23 Sep 2017 18:14:44 GMT
+      Content-Length:
+      - '210'
+      Via:
+      - 1.1 vegur
+    body:
+      encoding: UTF-8
+      string: '{"id":842,"number":"baa018af1b8d52ee","total":"10.0","total_quantity":100,"email":"dev-8@example.com","special_instructions":null,"created_at":"2017-09-23T18:14:44.116Z","updated_at":"2017-09-23T18:14:44.116Z"}'
+    http_version: 
+  recorded_at: Sat, 23 Sep 2017 18:14:44 GMT
+recorded_with: VCR 3.0.3
