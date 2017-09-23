@@ -74,6 +74,11 @@ new_user = unauthenticated_client.users.register(email: {email}, password: {pass
 user = unauthenticated_client.users.authenticate(email: {email}, password: {password})
 ```
 
+## Future Enhancements
+
+These are enhancements that could be made to the gem based on need.
+* Local Caching
+* Automatic Failed HTTP Request Retries
 
 ## License
 
