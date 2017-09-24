@@ -1,5 +1,6 @@
 require "active_support/all"
 require "httparty"
+require "cgi"
 
 require "teachable/models/concerns/hashable"
 require "teachable/models/order"

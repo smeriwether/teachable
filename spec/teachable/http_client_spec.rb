@@ -101,4 +101,14 @@ RSpec.describe Teachable::HttpClient do
     expect { Teachable::HttpClient.new.destroy("/foo/1.json") }.
       to raise_error(Teachable::UnsucessfulRequestError)
   end
+
+  it "encodes the email and token" do
+    fake_email = "foo+1@example.com"
+    fake_token = "foobar+baz"
+    stub = stub_request(
+      :get, "http://localhost:3000/foo.json?user_email=foo%2B1@example.com&user_token=foobar%2Bbaz"
+    )
+    Teachable::HttpClient.new(fake_email, fake_token).get("/foo.json")
+    expect(stub).to have_been_requested
+  end
 end

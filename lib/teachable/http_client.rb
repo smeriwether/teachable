@@ -40,7 +40,7 @@ module Teachable
 
     def authenticated_url(url)
       return url unless email && token
-      "#{url}?user_email=#{email}&user_token=#{token}"
+      "#{url}?user_email=#{CGI.escape(email)}&user_token=#{CGI.escape(token)}"
     end
   end
 end
